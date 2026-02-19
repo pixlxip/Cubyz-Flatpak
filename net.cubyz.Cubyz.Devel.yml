@@ -21,9 +21,9 @@ modules:
       - dependencies/zig/zig build
       - install -D zig-out/bin/Cubyz ${FLATPAK_DEST}/bin/cubyz
       - install -D data/launch.sh ${FLATPAK_DEST}/bin/launch.sh
-      - install -D data/net.cubyz.Cubyz.desktop ${FLATPAK_DEST}/share/applications/net.cubyz.Cubyz.desktop
+      - install -D data/net.cubyz.Cubyz.Devel.desktop ${FLATPAK_DEST}/share/applications/net.cubyz.Cubyz.Devel.desktop
       - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps
-      - cp data/net.cubyz.Cubyz.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/net.cubyz.Cubyz.png
+      - cp data/net.cubyz.Cubyz.Devel.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/net.cubyz.Cubyz.Devel.png
       - cp launchConfig.zon ${FLATPAK_DEST}/launchConfig.zon
       - cp -r assets ${FLATPAK_DEST}/assets
     sources:
@@ -32,7 +32,7 @@ modules:
         dest: data
       - type: git
         url: https://github.com/PixelGuys/Cubyz
-        commit: d5dbb197b62889fa30e36bb3bef51d584f944b48
+        commit: 4ab9d98b58d84bd9d640d244a70ee104662a7863
         dest: .
       - type: archive
         url: https://github.com/PixelGuys/Cubyz-zig-versions/releases/download/0.16.0-dev.1424%2Bd3e20e71b/zig-x86_64-linux-0.16.0-dev.1424+d3e20e71b.tar.xz
