@@ -1,0 +1,31 @@
+.{
+	.name = .Cubyzig,
+	.fingerprint = 0x782a2e402c0ee887,
+	.version = "0.0.0",
+	.paths = .{""},
+	.dependencies = .{
+		.local = .{
+			.path = "../Cubyz-libs/zig-out",
+			.lazy = true,
+		},
+		.cubyz_deps_headers = .{
+			.path = "dependencies/cubyz_deps_headers",
+			.lazy = true,
+		},
+		.cubyz_deps_aarch64_linux = .{
+			.path = "dependencies/cubyz_deps_aarch64_linux",
+			.lazy = true,
+		},
+		.cubyz_deps_x86_64_linux = .{
+			.path = "dependencies/cubyz_deps_x86_64_linux",
+			.lazy = true,
+		},
+		.cubyz_large_assets = .{
+			.path = "dependencies/cubyz_large_assets",
+		},
+		.cubyz_test_runner = .{
+			.path = "dependencies/cubyz_test_runner",
+			.lazy = true,
+		},
+	},
+}

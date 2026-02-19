@@ -1,0 +1,21 @@
+--- src/files.zig	2026-02-17 18:20:07.132873788 -0700
++++ src/files.zig-patched	2026-02-17 18:26:52.730403482 -0700
+@@ -59,7 +59,7 @@
+ 		cubyzDirStr_ = main.globalAllocator.dupe(u8, main.settings.launchConfig.cubyzDir);
+ 		return;
+ 	}
+-	const homePath = try std.process.getEnvVarOwned(main.stackAllocator.allocator, if(builtin.os.tag == .windows) "USERPROFILE" else "HOME");
++	const homePath = try std.process.getEnvVarOwned(main.stackAllocator.allocator, if (builtin.os.tag == .windows) "USERPROFILE" else "XDG_DATA_HOME");
+ 	defer main.stackAllocator.free(homePath);
+ 	var homeDir = try std.fs.openDirAbsolute(homePath, .{});
+ 	defer homeDir.close();
+@@ -67,8 +67,8 @@
+ 		cubyzDir_ = try homeDir.makeOpenPath("Saved Games/Cubyz", .{});
+ 		cubyzDirStr_ = std.mem.concat(main.globalAllocator.allocator, u8, &.{homePath, "/Saved Games/Cubyz"}) catch unreachable;
+ 	} else {
+-		cubyzDir_ = try homeDir.makeOpenPath(".cubyz", .{});
+-		cubyzDirStr_ = std.mem.concat(main.globalAllocator.allocator, u8, &.{homePath, "/.cubyz"}) catch unreachable;
++		cubyzDir_ = try homeDir.makeOpenPath("cubyz", .{});
++		cubyzDirStr_ = std.mem.concat(main.globalAllocator.allocator, u8, &.{homePath, "/cubyz"}) catch unreachable;
+ 	}
+ }

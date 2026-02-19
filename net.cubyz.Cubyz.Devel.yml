@@ -1,0 +1,60 @@
+id: net.cubyz.Cubyz.Devel
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+command: launch.sh
+
+finish-args:
+  - --share=ipc
+  - --socket=pulseaudio
+  - --socket=x11
+  - --device=dri
+  - --share=network
+
+modules:
+  - name: cubyz
+    buildsystem: simple
+    build-commands:
+      - mv data/build.zig.zon build.zig.zon
+      - patch -u src/files.zig -i data/patches/files-devel.patch
+      - cat build.zig | grep 'const version'
+      - dependencies/zig/zig build
+      - install -D zig-out/bin/Cubyz ${FLATPAK_DEST}/bin/cubyz
+      - install -D data/launch.sh ${FLATPAK_DEST}/bin/launch.sh
+      - install -D data/net.cubyz.Cubyz.desktop ${FLATPAK_DEST}/share/applications/net.cubyz.Cubyz.desktop
+      - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps
+      - cp data/net.cubyz.Cubyz.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/net.cubyz.Cubyz.png
+      - cp launchConfig.zon ${FLATPAK_DEST}/launchConfig.zon
+      - cp -r assets ${FLATPAK_DEST}/assets
+    sources:
+      - type: dir
+        path: .
+        dest: data
+      - type: git
+        url: https://github.com/PixelGuys/Cubyz
+        commit: d5dbb197b62889fa30e36bb3bef51d584f944b48
+        dest: .
+      - type: archive
+        url: https://github.com/PixelGuys/Cubyz-zig-versions/releases/download/0.16.0-dev.1424%2Bd3e20e71b/zig-x86_64-linux-0.16.0-dev.1424+d3e20e71b.tar.xz
+        sha256: ea6308db19148078c1dc8d66e76d21ddd4c6e378711f6237a0156d02e0d1593f
+        dest: dependencies/zig
+      - type: archive
+        url: https://github.com/PixelGuys/Cubyz-Libs/releases/download/11/cubyz_deps_headers.tar.gz
+        sha256: 4ce2454cc98b470b2f638ceabf442f7d2ddbf855df9b1ce23ffb9ca203ed9d7c
+        dest: dependencies/cubyz_deps_headers
+      - type: archive
+        url: https://github.com/PixelGuys/Cubyz-Libs/releases/download/11/cubyz_deps_aarch64-linux-musl.tar.gz
+        sha256: f32deaa47551d5dc10073a1f3b83d0fc354b44551700b6308253de3fb5ef108e
+        dest: dependencies/cubyz_deps_aarch64_linux
+      - type: archive
+        url: https://github.com/PixelGuys/Cubyz-Libs/releases/download/11/cubyz_deps_x86_64-linux-musl.tar.gz
+        sha256: f7df22fd22414a287ff8e54025ac36f774ca09bc290acbaed56984eb4cea18c2
+        dest: dependencies/cubyz_deps_x86_64_linux
+      - type: git
+        url: https://github.com/PixelGuys/Cubyz-Assets
+        commit: 47ad749869a337e3782a414ed52bca87e3904c9b
+        dest: dependencies/cubyz_large_assets
+      - type: archive
+        url: https://github.com/PixelGuys/Cubyz-std-lib/archive/refs/tags/0.16.0-dev.1424+1.tar.gz
+        sha256: 665c75ac174561874caa760074899a42264f64daab4fb67bf397bd0a70650129
+        dest: dependencies/cubyz_test_runner
