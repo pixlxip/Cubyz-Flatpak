@@ -18,7 +18,7 @@ modules:
       - mv data/build.zig.zon build.zig.zon
       - patch -u src/files.zig -i data/patches/files.patch
       - cat build.zig | grep 'const version'
-      - dependencies/zig/zig build -Drelease
+      - dependencies/zig/zig build -Drelease -Doptimize=ReleaseSafe
       - install -D zig-out/bin/Cubyz ${FLATPAK_DEST}/bin/cubyz
       - install -D data/launch.sh ${FLATPAK_DEST}/bin/launch.sh
       - install -D data/data/net.cubyz.Cubyz.desktop ${FLATPAK_DEST}/share/applications/net.cubyz.Cubyz.desktop
